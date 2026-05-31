@@ -28,6 +28,7 @@ export class AddCategoryFormComponent implements OnInit {
   ngOnInit() {
     this.addCategoryForm = this.formBuilder.group({
       categoryName: ['', Validators.required],
+      videoUrl: ['', Validators.required],
     });
   }
 
