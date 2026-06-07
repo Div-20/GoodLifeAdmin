@@ -335,16 +335,19 @@ export class ApiService {
     );
   }
   
-  public moveToCompletedOrders(
-    order: any
-  ): Observable<any>
-  {
+  public moveToCompletedOrders(order: any): Observable<any> {
+    const updatedOrder = {
+      ...order,
+      createdAt: Date.now(),
+      dispatchedOn: new Date().toISOString().split('T')[0] // YYYY-MM-DD
+    };
+  
     return this.http.post(
       this.dbUrl +
-      "completedOrders/" +
-      order.orderedBy +
-      ".json",
-      order
+        'completedOrders/' +
+        order.orderedBy +
+        '.json',
+      updatedOrder
     );
   }
   
