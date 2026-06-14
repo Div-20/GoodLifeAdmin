@@ -423,7 +423,8 @@ export class ApiService {
   
     const updatedOrder = {
       ...order,
-      completedAt: Date.now()
+      createdAt: Date.now(),
+      dispatchedOn: new Date().toISOString().split('T')[0]
     };
   
     return this.http.post(
