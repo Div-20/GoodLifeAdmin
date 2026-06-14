@@ -303,6 +303,11 @@ export class ApiService {
     return this.http.get(this.dbUrl+"activeOrders.json");
   }
 
+  public getAllSparePartCustomOrders() : Observable<any>
+  {
+    return this.http.get(this.dbUrl+"inquiryOrders.json");
+  }
+
   public getSparePartOrder(
     orderedBy: string,
     firebaseOrderId: string
