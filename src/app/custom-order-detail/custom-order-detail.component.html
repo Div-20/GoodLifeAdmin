@@ -230,10 +230,11 @@
       class="upload-section"
     >
 
-      <input
-        type="file"
-        (change)="onAdditionalSelected($event)"
-      />
+    <input
+    type="file"
+    accept=".pdf,image/*"
+    (change)="onAdditionalSelected($event)"
+  />
 
       <button
         class="primary-btn"

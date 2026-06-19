@@ -393,9 +393,22 @@ loadingMessage = 'Please wait...';
 
   async uploadAdditionalDocument(): Promise<void> {
 
-    if (
-      !this.selectedAdditionalFile
-    ) {
+    if (!this.selectedAdditionalFile) {
+      return;
+    }
+  
+    const file = this.selectedAdditionalFile;
+  
+    const isPdf =
+      file.type === 'application/pdf';
+  
+    const isImage =
+      file.type.startsWith('image/');
+  
+    if (!isPdf && !isImage) {
+      alert(
+        'Only PDF and image files are allowed.'
+      );
       return;
     }
   
@@ -411,12 +424,12 @@ loadingMessage = 'Please wait...';
           .split('T')[0];
   
       const filePath =
-        `customOrderDocuments/${currentDate}/${Date.now()}_${this.selectedAdditionalFile.name}`;
+        `customOrderDocuments/${currentDate}/${Date.now()}_${file.name}`;
   
       const uploadTask =
         this.storage.upload(
           filePath,
-          this.selectedAdditionalFile
+          file
         );
   
       const uploadResult =
@@ -425,13 +438,21 @@ loadingMessage = 'Please wait...';
       const downloadUrl =
         await uploadResult.ref.getDownloadURL();
   
+      const documentType:
+        'pdf' | 'image' =
+        isPdf
+          ? 'pdf'
+          : 'image';
+  
       const existingDocuments =
-        this.order
-          .additionalDocuments || [];
+        this.order.additionalDocuments || [];
   
       const updatedDocuments = [
         ...existingDocuments,
-        downloadUrl
+        {
+          url: downloadUrl,
+          type: documentType
+        }
       ];
   
       this.apiService
